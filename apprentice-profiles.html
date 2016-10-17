@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+            $${ROI.Subject}
+        </title>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+        <!-- Imported Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,400,400i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"
+        rel="stylesheet">
+        <!-- Font Awesome -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1"
+        crossorigin="anonymous">
+        <style>
+            body {
+                font-family: 'Open Sans', Arial, sans-serif;
+                background-color: white;
+            }
+            i {
+                cursor: pointer;
+            }
+            .banner{
+                font-family: 'Merriweather', serif !important;
+                font-weight: 800; serif !important;
+                font-size: 35px; margin-left: 50px;
+            }
+            /*.btn-primary{ background-color: #cccc33; border-color:#cccc33; margin-bottom: 15px;}*/
+            .checkbox{
+                display: inline-block;
+            }
+            .checkbox label{
+                padding-left: 30px;
+            }
+            .profile-serif{
+                font-family: 'Merriweather', serif !important;
+                font-size: 18px;
+                 padding-bottom: 5px;
+             }
+            .form-wrapper{
+                background-color: #33cccc;
+                bottom-margin:150px;
+                width: 500px;
+                padding: 5px;
+                color:white;
+            }
+            .profile-card{
+                background-color: #990000;
+                color:white;
+                margin: 5px;
+                width:300px;
+                padding-top: 10px;
+            }
+            .profile-top{
+                padding:10px;
+            }
+            .quote{
+                font-style: oblique;
+                font-size: 18px;
+                color:#ffebcd
+            }
+            .info-bar{
+                padding: 15px;
+            }
+            .info-bar h4{
+              font-size: 13px;
+            }
+            .btn.outline {
+                background: none;
+                padding: 12px 22px;
+                border-radius: 0px;
+                color: #037da6;
+            }
+            .btn-primary{
+            border-color:#037da6;
+            }
+            .btn-primary.outline{
+                border: 4px solid #037da6;
+                color: #037da6;
+            }
+            .btn-primary.outline:hover, .btn-primary.outline:focus, .btn-primary.outline:active, .btn-primary.outline.active, .open > .dropdown-toggle.btn-primary {
+                color: #33a6cc;
+                border-color: #33a6cc;
+            }
+            .btn-primary.outline:active, .btn-primary.outline.active {
+                border-color: #33a6cc;
+                color: #33a6cc;
+                box-shadow: none;
+            }
+            .info-icon{
+                margin:10px;
+            }
+            .sort-name{
+                background-color: #33cccc;
+                margin-left: 15px;
+                border-color: #33cccc 2px solid #fff
+            }
+            .sort-relocate{
+                background-color: #cccc33;
+                margin-right: 15px;
+                }
+            .sort-class{
+                background-color: #33cccc;
+            }
+            .profile-image{
+                position: relative;
+                left: 0;
+                top: 0;
+            }
+            .profile-class{font-family: "Merriweather";
+                font-size: 17px;
+                margin-left: 10px;
+                border: solid 1px;
+                padding: 4px;}
+            .img-center{
+                margin: 0 auto;
+                position: relative;
+                top: 0;
+                left: 0;
+            }
+            .red-badge {
+
+                position: absolute;
+                top: 80px;
+                right: 15px;
+                width: 40px;
+            }
+            .purple-badge{
+
+                position: absolute;
+                top: 134px;
+                right: 15px;
+                width: 40px;
+            }
+            .gold-badge{
+                position: absolute;
+                top: 25px;
+                right: 15px;
+                width: 40px;
+            }
+            .linkedinpush{
+                margin:10px;
+            }
+            .link-unstyled {
+                color: inherit;
+                text-decoration: inherit;
+            }
+            .link-unstyled:link {
+                color: inherit;
+                text-decoration: inherit;
+            }
+            .link-unstyled:hover{
+                color: inherit;
+                text-decoration: inherit;
+            }
+            .container-box{
+                display: flex;
+                flex-wrap: wrap;
+                align-content: space-between;
+            }
+            .margin{
+                margin-bottom: 5px;
+            }
+        </style>
+    </head>
+<body>
+    <div class="container">
+        <div class="banner"> Available Candidates</div>
+        <div ng-controller="ApprenticeController" ng-app="myApp">
+            <div class="apprentices row">
+                <h4>Sort candidates by:</h4>
+                <button class="btn btn-primary outline" ng-click="sortBy('Name')">
+                    Name (Alphabetical Order)  <span class="sortorder fa fa-sort" ng-show="propertyName === 'Name'" ng-class="{reverse: reverse}"></span>
+                </button>
+
+            <span class="filter">
+                <h4>Filter candidates:</h4>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="" ng-model="search.Relocate" ng-true-value="'TotallyWillingToRelocate'" ng-false-value="">
+                        Willing to relocate <span class="fa fa-plane fa-rotate-90"><span>
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="" ng-model="search.JS" ng-true-value="'MemberofJS'" ng-false-value="">
+                        JavaScript
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="" ng-model="search.Net" ng-true-value="'MemberofNet'" ng-false-value="">
+                        .NET
+                    </label>
+                </div>
+            </span>
+            </div>
+        <br>
+
+            <div class="container-box">
+                <div ng-repeat="apprentice in apprentices | orderBy:propertyName:reverse | filter:search.JS | filter:search.Net | filter:search.Relocate">
+                <div class="clearfix" ng-if="$index % 3 == 0"></div>
+                    <div class="col-xs-10 col-md-4 profile-card">
+                        <div class="profile-top">
+                            <span class="profile-serif"> {{apprentice.FirstName}} {{apprentice.LastName}}</span>
+                            <i class="{{apprentice.ReloStyle}}" title="willing to relocate" style="margin-bottom:5px";></i>
+                            <span class="profile-class">{{apprentice.Class}}</span>
+                        </div>
+                        <div class="profile-image">
+                            <img class="img-responsive img-center" ng-src="{{apprentice.Photo}}" />
+                            <div ng-repeat="badge in apprentice.Badge">
+                          <a href="https://elevenfifty.org/about/accreditation/?utm_source=LandingPage&utm_medium=LandingPage&utm_campaign=NewHire">  <img title="{{badge.Title}}" src="{{badge.Img}}" class="{{badge.Class}}"></a>
+                            </div>
+                        </div>
+                        <div class="row info-bar">
+                         <i title="more info" class="fa fa-caret-down fa-3x info-icon" ng-click="showDetails = !showDetails"></i>
+                            <span class="pull-right" ng-repeat="link in apprentice.Links">
+                                <a class="link-unstyled" ng-href="{{link.Link}}" href="#" target="_blank">
+                                    <i title="{{link.Site}}" class="{{link.Icon}}">.</i>
+                                </a>
+                            </span>
+                        </div>
+                        <div ng-show="showDetails">
+                            <p>{{apprentice.Info}}</p>
+                            <p class="quote">{{apprentice.Quote}}</p>
+                            <label>Language Proficencies:</label>
+                            <ul style="list-style-type:none" ng-repeat="language in apprentice.Languages">
+                                <li>{{language}}</li>
+                            </ul>
+                            <label><h3>Links:</h3></label>
+                            <ul style="list-style-type:none" ng-repeat="link in apprentice.Links">
+                                <li>
+                                    <a ng-href="{{link.Link}}"  href="#" target="_blank">{{link.Site}}</a>
+                                </li>
+                            </ul>
+                            <h5>Relocate: {{apprentice.Relocate}}</h5>
+                            <button type="button" class="btn btn-primary btn-block margin" ng-click="showForm = ! showForm">
+                                I'm Interested in {{apprentice.FirstName}}!
+                            </button>
+                            <div ng-show="showForm" >
+
+                                <form class="margin" action="https://formspree.io/mdurkin@elevenfifty.org" method="POST" method="post">
+                                    First Name * :<br>
+                                    <input type="text" name="first_name" class="form-control" maxlength="50" required><br>
+                                    Last Name * :<br>
+                                    <input type="text" name="last_name" class="form-control" maxlength="50" required><br>
+                                    Company * :<br>
+                                    <input type="text" name="company" class="form-control" maxlength="50" required><br>
+                                    Phone Number * :<br>
+                                    <input type="tel" name="phone" pattern="\d{3}[\-]\d{3}[\-]\d{4}" placeholder="111-111-1111" class="form-control" required><br>
+                                    E-mail * :<br>
+                                    <input type="email" name="email" class="form-control" required><br>
+                                    Comment * :<br>
+                                    <textarea  name="message" maxlength="1000" class="form-control" value="Hello, I would like to express my interest in {{apprentice.FirstName}} {{apprentice.LastName}}!" >Hello, I would like to express my interest in {{apprentice.FirstName}} {{apprentice.LastName}}! </textarea> <br>
+                                    <input class="btn btn-primary" type="submit" value="Send">
+                                    <input class="btn btn-primary" type="reset" value="Reset"><h5>* All fields required. </h5>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" type="text/javascript">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous" type="text/javascript">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+        var app = angular.module('myApp', []);
+        app.controller('ApprenticeController', ['$scope', function($scope) {
+            var apprentices = [{
+                FirstName: 'Chris',
+                LastName: 'Beckman',
+                Info: 'Chris has a degree in Media Arts & Sciences and a Certificate in Web Development. He is a full stack developer, with equal passion for both front and back end work. Chris brings a great sense of humor, level headedness, and inquisitive nature to any team.',
+                Quote: '“Chris has the best attitude. He is ‘yes ma’am, may I have another’ and I love that. Technically he is super solid and willing to dive into anything head first and will come out with a win.” - Tiffany Trusty, Eleven Fifty Director of Apprenticeship',
+                Relocate: 'Yes (within approx 60 square miles of Indianapolis)',
+                Photo: 'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/chris_beckman_500px.jpg',
+                Languages: ['JavaScript', 'PHP', 'SQL'],
+                Links: [{
+                    Link: 'https://www.linkedin.com/in/christopher-beckman-24b69440',
+                    Site: 'LinkedIn',
+                    Icon: 'fa fa-linkedin-square fa-3x linkedinpush'
+                }, {
+                    Link: 'http://chris-beckman-portfolio.mybluemix.net/#/',
+                    Site: 'Portfolio',
+                    Icon: 'fa fa-desktop fa-3x info-icon'
+                }, {
+                    Link: 'https://drive.google.com/file/d/0BzM301-KLtPTdXNKM0Rycm5GbDQ/view?usp=sharing',
+                    Site: 'Resume',
+                    Icon: 'fa fa-file-text fa-3x info-icon'
+                }],
+                Badge: [{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/gold-01.png',
+                    Title: 'Gold Badge Proficent',
+                    Class: "gold-badge"
+                  },{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/red-01.png',
+                    Title: 'Red Badge Proficent',
+                    Class: "red-badge"
+                  }],
+                Class: '.JS',
+                JSString: "MemberofJS",
+                RelocateString: "TotallyWillingToRelocate",
+                ReloStyle: 'fa fa-plane fa-rotate-90 pull-right'
+            },
+
+            {   FirstName: 'Benjamin',
+                LastName:'Harcourt',
+                Info: 'Ben has a history of working as part of a team. He’s interested in a full-stack position. A few words to describe Ben are; inquisitive, determined, imaginative, and focused. He has a passion for coding and loves that it’s frustrating and fun at the same time. ',
+                Quote: '“Ben is great at visualizing the big picture.  He often sees good connections with project builds and works to develop solutions for challenges that arise within a project.” - James Handshoe, Eleven Fifty Instructor ',
+                Relocate: 'No',
+                Photo: 'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/ben_harcourt_500px.jpg',
+                Languages: ['JavaScript'],
+                Links: [{
+                    Link: 'https://www.linkedin.com/in/benjamin-harcourt-860323124?trk=hp-identity-name',
+                    Site: 'LinkedIn',
+                    Icon: 'fa fa-linkedin-square fa-3x linkedinpush'
+                }, {
+                    Link: 'https://ben-harcourt.github.io/',
+                    Site: 'Portfolio',
+                    Icon: 'fa fa-desktop fa-3x info-icon'
+                }, {
+                    Link: 'https://docs.google.com/document/d/1b5780T1q0qP35YeKg9n-mbVbHVXIn4hNoF7n9RYctBU/edit?usp=sharing',
+                    Site: 'Resume',
+                    Icon: 'fa fa-file-text fa-3x info-icon'
+
+                }],
+                Badge: [{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/gold-01.png',
+                    Title: 'Gold Badge Proficent',
+                    Class: "gold-badge"
+                  },{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/red-01.png',
+                    Title: 'Red Badge Proficent',
+                    Class: "red-badge"
+                  }],
+                Class: '.JS',
+                JSString: "MemberofJS",
+                ReloStyle: ''
+            },
+
+            {   FirstName: 'Bret',
+                LastName: 'Johnson',
+                Info: 'As a Florida native, Bret recently moved to Central Indiana to follow a career in web development. With knowledge in C#, MVC, ASP.Net, HTML, CSS and a small amount of JavaScript, Bret has the ability to become creative in completing projects and applications. He is a strong team player with strong communication skills. He is a driven and well-spoken developer.',
+                Quote: '“Bret has quiet determination to get through problems he is trying to resolve.” - Jenn Aikins',
+                Relocate: 'No',
+                Photo: 'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/bret_johnson_500px.jpg',
+                Languages: ['C#'],
+                Links: [{
+                    Link: 'https://www.linkedin.com/in/bret-johnson-865323124',
+                    Site: 'LinkedIn',
+                    Icon: 'fa fa-linkedin-square fa-3x linkedinpush'
+                }, {
+                    Link: 'https://bret-johnson.github.io/',
+                    Site: 'Portfolio',
+                    Icon: 'fa fa-desktop fa-3x info-icon'
+                }, {
+                    Link: 'https://docs.google.com/document/d/1OOhCE88YDdktkttyfQ-r5YD7dNgpFn-PkOoCnlremmo/edit',
+                    Site: 'Resume',
+                    Icon: 'fa fa-file-text fa-3x info-icon'
+                }],
+                Badge: [{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/gold-01.png',
+                    Title: 'Gold Badge Proficent',
+                    Class: "gold-badge"
+                  },{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/red-01.png',
+                    Title: 'Red Badge Proficent',
+                    Class: "red-badge"
+                  }],
+                Class: '.Net',
+                NetString: "MemberofNet"
+            },
+
+            {   FirstName: 'Tin',
+                LastName: 'Le',
+                Info: 'Tin has a bachelor’s degree in Computer Science. He is organized, detail oriented, and works tirelessly to finish tasks big and small. He is adaptable, having moved here from Vietnam just two years ago. He enjoys coding because it allows him to be creative and innovative. When given a task, Tin gives 100% of himself until it is completed to a very high standard.  ',
+                Quote: '“Tin is one of the stronger coders that we’ve had. He is textbook with his work and the reality with him that he’s learned a second language while developing a deep coding knowledge and talent.” - Jenn Aikins, Eleven Fifty Director of Learning',
+                Relocate: 'Yes',
+                Photo: 'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/tin_le_500px.jpg',
+                Languages: ['Java', 'C#'],
+                Links: [{
+                    Link: 'https://www.linkedin.com/in/tin-le-722576a0',
+                    Site: 'LinkedIn',
+                    Icon: 'fa fa-linkedin-square fa-3x linkedinpush'
+                }, {
+                    Link: 'http://tinlecs.github.io/',
+                    Site: 'Portfolio',
+                    Icon: 'fa fa-desktop fa-3x info-icon'
+                }, {
+                    Link: 'http://tinlecs.github.io/TinLeResume.pdf',
+                    Site: 'Resume',
+                    Icon: 'fa fa-file-text fa-3x info-icon'
+                }],
+                Badge: [{
+                        Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/gold-01.png',
+                        Title: 'Gold Badge Proficent',
+                        Class: "gold-badge"
+                      },{
+                        Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/red-01.png',
+                        Title: 'Red Badge Proficent',
+                        Class: "red-badge"
+                      },
+                      {
+                          Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/purple-01.png',
+                          Title: 'Purple Badge Proficent',
+                          Class: "purple-badge"
+                        }],
+                Class: '.Net',
+                NetString: "MemberofNet",
+                RelocateString: "TotallyWillingToRelocate",
+                ReloStyle: 'fa fa-plane fa-rotate-90 pull-right'
+            },
+
+            {   FirstName: 'Sean',
+                LastName: 'Lehman',
+                Info: 'Sean is a dependable, innovative worker with experience in Microsoft.NET. He has a passion for developing software and enjoys coding to solve problems presented to him. Sean has always been a valuable asset for the companies that have employed him and worked hard to streamline the process for everyone that came after him. He is looking forward to bringing his integrity and energy to his future employer. ',
+                Quote: '“Sean brings wisdom to the code. He approaches things very methodically, very conscientious. He’s the one who had tons of notebooks coming out of class. He wanted to learn everything and absorb as much as he could.” - Jenn Aikins, Eleven Fifty Director of Learning',
+                Relocate: 'No',
+                Photo: 'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/sean_lehman_500px.jpg',
+                Languages: ['C#'],
+                Links: [{
+                    Link: 'https://www.linkedin.com/in/sean-lehman-19a6905',
+                    Site: 'LinkedIn',
+                    Icon: 'fa fa-linkedin-square fa-3x linkedinpush'
+                }, {
+                    Link: 'https://seanlehman.github.io/',
+                    Site: 'Portfolio',
+                    Icon: 'fa fa-desktop fa-3x info-icon'
+                }, {
+                    Link: 'https://seanlehman.github.io/assets/pdfs/Resume%20-%20Sean%20Lehman.pdf',
+                    Site: 'Resume',
+                    Icon: 'fa fa-file-text fa-3x info-icon'
+                }],
+                Badge: [{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/gold-01.png',
+                    Title: 'Gold Badge Proficent',
+                    Class: "gold-badge"
+                  },{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/red-01.png',
+                    Title: 'Red Badge Proficent',
+                    Class: "red-badge"
+                  }],
+                Class: '.Net',
+                NetString: "MemberofNet",
+                ReloStyle: ''
+            },
+
+            {   FirstName: 'David',
+                LastName: 'Mazmanian',
+                Info: 'Dave is passionate about solving technical problems as simply and elegantly as possible. He has a background in the technology field, with experience in training, installing hardware and software, and developing intercompany websites.',
+                Quote: "“Give him a problem, and he'll put his head down and figure it out. Give him a ship date, and he'll overdeliver. Give him a team and he'll make everybody better.” - Paul O’Connor, Eleven Fifty Curriculum Manager",
+                Relocate: 'No',
+                Photo: 'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/dave_maz_500px.jpg',
+                Languages: ['C#'],
+                Links: [{
+                    Link: 'https://www.linkedin.com/in/davemaz',
+                    Site: 'LinkedIn',
+                    Icon: 'fa fa-linkedin-square fa-3x linkedinpush'
+                }, {
+                    Link: 'http://davemaz.com/',
+                    Site: 'Portfolio',
+                    Icon: 'fa fa-desktop fa-3x info-icon'
+                }, {
+                    Link: 'http://davemaz.com/David_Mazmanian-Resume.pdf',
+                    Site: 'Resume',
+                    Icon: 'fa fa-file-text fa-3x info-icon'
+                }],
+              Badge: [{
+                      Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/gold-01.png',
+                      Title: 'Gold Badge Proficent',
+                      Class: "gold-badge"
+                    },{
+                      Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/red-01.png',
+                      Title: 'Red Badge Proficent',
+                      Class: "red-badge"
+                    },
+                    {
+                        Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/purple-01.png',
+                        Title: 'Purple Badge Proficent',
+                        Class: "purple-badge"
+                      }],
+                Class: '.Net',
+                NetString: "MemberofNet",
+                ReloStyle: ''
+            },
+
+            {   FirstName: 'Tara ',
+                LastName: 'Miller',
+                Info: 'Tara is an artist who is putting her design skills towards front-end web development. She enjoys a challenge and always comes up with creative ways to solve a problem. She is a great teammate, brings a fun energy to every group and will go out of her way to make everyone feel comfortable.',
+                Quote: '“Tara has a creativity that is amazing to me. She looks at the world a bit differently and then bring that perspective into her projects.” - Jenn Aikins, Eleven Fifty Director of Learning',
+                Relocate: 'Yes: anywhere warm',
+                Photo: 'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/tara_miller_500px.jpg',
+                Languages: ["JavaScript"],
+                Links: [{
+                    Link: 'https://www.linkedin.com/in/tarareemiller',
+                    Site: 'LinkedIn',
+                    Icon: 'fa fa-linkedin-square fa-3x linkedinpush'
+                }, {
+                    Link: 'http://tarareemiller.com/',
+                    Site: 'Portfolio',
+                    Icon: 'fa fa-desktop fa-3x info-icon'
+                }, {
+                    Link: 'http://tarareemiller.com/resume.pdf',
+                    Site: 'Resume',
+                    Icon: 'fa fa-file-text fa-3x info-icon'
+                }],
+                Badge: [{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/gold-01.png',
+                    Title: 'Gold Badge Proficent',
+                    Class: "gold-badge"
+                  },{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/red-01.png',
+                    Title: 'Red Badge Proficent',
+                    Class: "red-badge"
+                  }],
+                Class: '.JS',
+                JSString: "MemberofJS",
+                ReloStyle: 'TotallyWillingToRelocate'
+            },
+
+            {   FirstName: 'Collin',
+                LastName: 'Peak',
+                Info: 'Collin is creative, hard-working, and trustworthy. He’s interested in full-stack positions where he can apply his current skill set and continue to learn as part of his job. He brings a quiet resolve to the team that everyone can rely on. He earned a Bachelor’s in Biology and would enjoy applying that knowledge in the future. ',
+                Quote: '“Collin has shown great resiliency throughout this program. He has that quiet perseverance, or resilience, that has allowed him to become successful.” - Jenn Aikins, Eleven Fifty Director of Learning',
+                Relocate: 'Yes',
+                Photo: 'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/collin_peak_500px.jpg',
+                Languages: ["C#"],
+                Links: [{
+                    Link: 'https://www.linkedin.com/in/collin-peak-b94352124',
+                    Site: 'LinkedIn',
+                    Icon: 'fa fa-linkedin-square fa-3x linkedinpush'
+                }, {
+                    Link: 'https://cdpeak.github.io/',
+                    Site: 'Portfolio',
+                    Icon: 'fa fa-desktop fa-3x info-icon'
+                }, {
+                    Link: 'https://drive.google.com/file/d/0B5Rrb5DwLUMJdF9rRVpLMmRpS1E/view?usp=sharing',
+                    Site: 'Resume',
+                    Icon: 'fa fa-file-text fa-3x info-icon'
+                }],
+                Badge: [{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/gold-01.png',
+                    Title: 'Gold Badge Proficent',
+                    Class: "gold-badge"
+                  },{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/red-01.png',
+                    Title: 'Red Badge Proficent',
+                    Class: "red-badge"
+                  }],
+                Class: '.Net',
+                NetString: "MemberofNet",
+                RelocateString: "TotallyWillingToRelocate",
+                ReloStyle: 'fa fa-plane fa-rotate-90 pull-right'
+            },
+
+            {   FirstName: 'Mitch',
+                LastName: 'Reed',
+                Info: 'Mitch is a hardworking and determined C# developer who also has experience with VB.Net and an understanding of Java. He has always enjoyed learning how things work which has made him an objective-focused, organized and imaginative developer. Mitch is a diligent team leader who keeps everyone on task. ',
+                Quote: '“Mitch is so smart and is going to do good things. He takes assignments in stride, not much push back, and he delivers on time with quality, and I really appreciate that.” - Tiffany Trusty, Director of Apprenticeship',
+                Relocate: 'Yes',
+                Photo: 'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/mitchell_reed_500px.jpg',
+                Languages: ["C#"],
+                Links: [{
+                    Link: 'https://www.linkedin.com/in/mitchell-reed-7923a9aa',
+                    Site: 'LinkedIn',
+                    Icon: 'fa fa-linkedin-square fa-3x linkedinpush'
+                }, {
+                    Link: 'https://mitchreed123.github.io/',
+                    Site: 'Portfolio',
+                    Icon: 'fa fa-desktop fa-3x info-icon'
+                }, {
+                    Link: 'https://www.scribd.com/document/323741682/Mitchell-Reed-Resume-1',
+                    Site: 'Resume',
+                    Icon: 'fa fa-file-text fa-3x info-icon'
+                }],
+                Badge: [{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/gold-01.png',
+                    Title: 'Gold Badge Proficent',
+                    Class: "gold-badge"
+                  },{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/red-01.png',
+                    Title: 'Red Badge Proficent',
+                    Class: "red-badge"
+                  }],
+                Class: '.Net',
+                NetString: "MemberofNet",
+                RelocateString: "TotallyWillingToRelocate",
+                ReloStyle: 'fa fa-plane fa-rotate-90 pull-right'
+            },
+
+            {   FirstName: 'Evan',
+                LastName: 'Reller',
+                Info: 'Evan comes from a journalism background with a master’s degree in the field. He is a diligent, forward thinking web developer. Evan is an adept leader who vocalizes clear goals, can organize a team, and produces great results. He is introspective and knows how to put people in a position to succeed. Evan is hoping to apply his growing skill set to whatever task his future employer sets forth. ',
+                Quote: "“He is independent and able to research and learn but doesn't allow himself to get stuck and become unproductive.  When he hits a wall, he searches for a peer, mentor, or supervisor to help move beyond the issue.  He is fun to be around and has a great perspective and sense of humor.” - James Handshoe, Eleven Fifty Instructor",
+                Relocate: 'No',
+                Photo: 'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/evan_reller_500px.jpg',
+                Languages: ["JavaScript"],
+                Links: [{
+                    Link: 'https://www.linkedin.com/in/evan-reller-114322124',
+                    Site: 'LinkedIn',
+                    Icon: 'fa fa-linkedin-square fa-3x linkedinpush'
+                }, {
+                    Link: 'https://ereller25.github.io/',
+                    Site: 'Portfolio',
+                    Icon: 'fa fa-desktop fa-3x info-icon'
+                }, {
+                    Link: 'https://docs.google.com/document/d/1DsOTDpbHD5q7htSrRlZSfQEKPKdfLhsDvD7mxXDtU6A/edit?usp=sharing',
+                    Site: 'Resume',
+                    Icon: 'fa fa-file-text fa-3x info-icon'
+                }],
+                Badge: [{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/gold-01.png',
+                    Title: 'Gold Badge Proficent',
+                    Class: "gold-badge"
+                  },{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/red-01.png',
+                    Title: 'Red Badge Proficent',
+                    Class: "red-badge"
+                  }],
+
+                Class: '.JS',
+                JSString: "MemberofJS",
+                ReloStyle: ''
+            },
+
+            {   FirstName: 'Deon',
+                LastName: 'Seifert',
+                Info: 'Deon is a problem solver. She’s tenacious when tracking down the solution to a challenge, and is a natural when working in groups and helping them achieve their goals. She is a Professional Scrum Master, and would love to find a position in project management where she could utilize her ten years experience in management. She offers an employer the unique perspective of bringing a coding background into her management style. ',
+                Quote: '“I don’t think it’s an insult to say Deon is the nurturing mother hen because that’s what makes her a good project manager. She’s thoughtful, methodical, she did everything I asked and more before her deadline with more quality. She knocked everything out of the park.” - Tiffany Trusty, Eleven Fifty Director of Apprenticeship',
+                Relocate: 'No',
+                Photo: 'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/deon_seifert_500px_1.jpg',
+                Languages: ['JavaScript'],
+                Links: [{
+                    Link: 'https://www.linkedin.com/in/deon-seifert-86245618',
+                    Site: 'LinkedIn',
+                    Icon: 'fa fa-linkedin-square fa-3x linkedinpush'
+                }, {
+                    Link: 'http://deonseifert.com',
+                    Site: 'Portfolio',
+                    Icon: 'fa fa-desktop fa-3x info-icon'
+                },{
+                    Link: 'http://www.slideshare.net/DeonSeifert/seifertdeonresume',
+                    Site: 'Resume',
+                    Icon: 'fa fa-file-text fa-3x info-icon'
+                }],
+                Badge: [{
+                      Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/gold-01.png',
+                      Title: 'Gold Badge Proficent',
+                      Class: "gold-badge"
+                    },{
+                      Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/red-01.png',
+                      Title: 'Red Badge Proficent',
+                      Class: "red-badge"
+                    },
+                    {
+                        Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/purple-01.png',
+                        Title: 'Purple Badge Proficent',
+                        Class: "purple-badge"
+                      }],
+                Class: '.Net',
+                NetString: "MemberofNet",
+                ReloStyle: ''
+            },
+
+            {   FirstName: 'Blake',
+                LastName: 'Steel',
+                Info: 'Blake is creative, has a good sense of humor, and enjoys working in teams while building relationships with those around him. He’s looking for a full-stack position, with a chance to step into project management opportunities in the future. He’s always been intrigued by coding and computers, and enjoys figuring out how things work and manipulating code to achieve a goal.',
+                Quote: '“Blake has such a great attitude about how he approaches everything. He has a good outlook, asks questions when he needs to, and is very courteous.” - Jenn Aikins, Eleven Fifty Director of Learning',
+                Relocate: 'No',
+                Photo: 'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/blake_steel_500px.jpg',
+                Languages: ["C#", "Java", "Swift"],
+                Links: [{
+                    Link: 'https://www.linkedin.com/in/blake-steel-66231a124',
+                    Site: 'LinkedIn',
+                    Icon: 'fa fa-linkedin-square fa-3x linkedinpush'
+                }, {
+                    Link: 'https://blakemsteel.github.io/',
+                    Site: 'Portfolio',
+                    Icon: 'fa fa-desktop fa-3x info-icon'
+                }, {
+                    Link: 'https://www.dropbox.com/s/xq72h9eg9pxlo1w/Resume.docx?dl=0',
+                    Site: 'Resume',
+                    Icon: 'fa fa-file-text fa-3x info-icon'
+                }],
+                Badge: [{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/gold-01.png',
+                    Title: 'Gold Badge Proficent',
+                    Class: "gold-badge"
+                  },{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/red-01.png',
+                    Title: 'Red Badge Proficent',
+                    Class: "red-badge"
+                  }],
+                Class: '.Net',
+                NetString: "MemberofNet",
+                ReloStyle: ''
+            },
+
+            {   FirstName: 'Chris',
+                LastName: 'Wainscott',
+                Info: 'Chris was one of the most dedicated apprentices in the Eleven Fifty program, and was awarded the Core Value for Learning by his peers. He has always been a hard worker who finds solutions for his teammates in his quest to expand his knowledge. Chris is determined to put his ever growing skill set to use and would be a huge asset to any company that hires him.  ',
+                Quote: '“Chris is by far one of the most hard working students that I have seen. He really pours himself into his work and does it with such enthusiasm and eagerness.” - Jenn Aikins, Eleven Fifty Director of Learning',
+                Relocate: 'No',
+                Photo: 'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/chris_wainscott_500px.jpg',
+                Languages: ['C#'],
+                Links: [{
+                    Link: 'https://www.linkedin.com/in/chriswainscott',
+                    Site: 'LinkedIn',
+                    Icon: 'fa fa-linkedin-square fa-3x linkedinpush'
+                }, {
+                    Link: 'https://chriswainscott.github.io/',
+                    Site: 'Portfolio',
+                    Icon: 'fa fa-desktop fa-3x info-icon'
+                }, {
+                    Link: 'https://drive.google.com/open?id=0B7J9PQBE6vRjYjExbmlyMFpXVFd0UHJiN1VxZ0RMaTFJZFBZ',
+                    Site: 'Resume',
+                    Icon: 'fa fa-file-text fa-3x info-icon'
+                }],
+                Badge: [{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/gold-01.png',
+                    Title: 'Gold Badge Proficent',
+                    Class: "gold-badge"
+                  },{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/red-01.png',
+                    Title: 'Red Badge Proficent',
+                    Class: "red-badge"
+                  }],
+                Class: '.Net',
+                NetString: "MemberofNet",
+                ReloStyle: ''
+            },
+
+            {   FirstName: 'Meghan',
+                LastName: 'White',
+                Info: 'Meghan is a talented front end developer and an excellent teammate. She enjoys solving difficult problems and produces elegant, easy to use results. She is level headed and calm under pressure with exceptional listening skills. With a background as a guidance counselor, Meghan is adept at dealing with a wide variety of people in a patient and respectful manner. She always completes her tasks on time and would be an asset to any team she joins. ',
+                Quote: '“Meghan just has it all together. She is poised, intelligent, she can do the work, but she also has the professional personality that we want to see.” - Tiffany Trusty, Eleven Fifty Director of Apprenticeship',
+                Relocate: 'Yes: Chicago, Colorado, Pacific Northwest',
+                Photo: 'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/meghan_white_500px.jpg',
+                Languages: ["JavaScript"],
+                Links: [{
+                    Link: 'https://www.linkedin.com/in/meghan-white-6a831a124',
+                    Site: 'LinkedIn',
+                    Icon: 'fa fa-linkedin-square fa-3x linkedinpush'
+                }, {
+                    Link: 'https://memwhite.github.io/',
+                    Site: 'Portfolio',
+                    Icon: 'fa fa-desktop fa-3x info-icon'
+                }, {
+                    Link: 'https://drive.google.com/open?id=0ByOE17-jHeMnR2NYZ0VwYkZHNzA',
+                    Site: 'Resume',
+                    Icon: 'fa fa-file-text fa-3x info-icon'
+                }],
+                Badge: [{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/gold-01.png',
+                    Title: 'Gold Badge Proficent',
+                    Class: "gold-badge"
+                  },{
+                    Img:'http://i1163.photobucket.com/albums/q559/ATADSP/1150_Apprentices/red-01.png',
+                    Title: 'Red Badge Proficent',
+                    Class: "red-badge"
+                  }],
+                Class: '.JS',
+                JSString: "MemberofJS",
+                RelocateString: "TotallyWillingToRelocate",
+                ReloStyle: 'fa fa-plane fa-rotate-90 pull-right'
+            }, ];
+
+            $scope.propertyName = 'Name';
+            $scope.reverse = false;
+            $scope.apprentices = apprentices;
+
+            $scope.sortBy = function(propertyName) {
+                $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
+                $scope.propertyName = propertyName;
+            };
+        }]);
+        </script>
+    </body>
+</html>
